@@ -40,5 +40,9 @@ struct Temperature: Decodable {
     }
 }
 
+struct WeatherAndTemperature {
+    let data: String
+    var type: WeatherDataType = .text
+}
 
 //WeatherContainer(weather: [NetworkPractice.Weather(main: "Clouds", icon: "02d", description: "약간의 구름이 낀 하늘")], main: NetworkPractice.Temperature(temp: 300.79, feels_like: 301.54, temp_min: 294.84, temp_max: 303.81))

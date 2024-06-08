@@ -48,13 +48,13 @@ class WeatherLabelTableViewCell: UITableViewCell, setup {
         }
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         chatLabel.numberOfLines = 0
         
     }
     
-    func configureCell(_ data: String) {
-        chatLabel.text = data
+    func configureCell(_ data: WeatherAndTemperature) {
+        chatLabel.text = data.data
     }
     
     required init?(coder: NSCoder) {

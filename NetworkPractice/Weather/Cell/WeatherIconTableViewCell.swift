@@ -50,12 +50,12 @@ class WeatherIconTableViewCell: UITableViewCell, setup {
         }
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         self.backgroundColor = .clear
     }
     
-    func configureCell(_ data: String) {
-        let url = URL(string: data)
+    func configureCell(_ data: WeatherAndTemperature) {
+        let url = URL(string: data.data)
         chatImageView.kf.setImage(with: url)
     }
     

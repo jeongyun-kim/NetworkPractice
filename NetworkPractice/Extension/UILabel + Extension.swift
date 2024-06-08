@@ -17,6 +17,7 @@ extension UILabel {
             self.textAlignment = .center
             self.font = UIFont.systemFont(ofSize: 14, weight: .bold)
             self.textColor = .white
+            self.text = ""
         case .plus:
             self.text = "+"
             self.font = UIFont.systemFont(ofSize: 18, weight: .bold)

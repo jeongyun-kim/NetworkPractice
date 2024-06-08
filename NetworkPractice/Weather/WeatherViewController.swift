@@ -11,7 +11,7 @@ import SnapKit
 
 class WeatherViewController: UIViewController, setup {
     
-    var list: [(String, WeatherDataType)] = [] {
+    var list: [WeatherAndTemperature] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -127,13 +127,16 @@ class WeatherViewController: UIViewController, setup {
     func network() {
         AF.request(WeatherUrl.weatherUrl).responseDecodable(of: WeatherContainer.self) { response in
             switch response.result {
+                
             case .success(let value):
-                self.list.append((value.weather.first!.desc, .text))
-                self.list.append((value.main.descCelsiusTemp, .text))
-                self.list.append((value.main.descHumidity, .text))
+                self.list.append(WeatherAndTemperature(data: value.weather.first!.desc))
+                self.list.append(WeatherAndTemperature(data: value.main.descCelsiusTemp))
+                self.list.append(WeatherAndTemperature(data: value.main.descHumidity))
+                self.list.append(WeatherAndTemperature(data: "오늘도 좋은 하루되세요✨"))
+                
                 WeatherUrl.weatherIconName = value.weather.first!.icon
-                self.list.append((WeatherUrl.weatherIconUrl, .icon))
-                self.list.append(("오늘도 좋은 하루되세요✨", .text))
+                self.list.append(WeatherAndTemperature(data: WeatherUrl.weatherIconUrl, type: .icon))
+                
             case .failure(let error):
                 print(error)
             }
@@ -156,14 +159,15 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch list[indexPath.row].1 {
+        let data = list[indexPath.row]
+        switch data.type {
         case .icon:
             let cell = tableView.dequeueReusableCell(withIdentifier: WeatherIconTableViewCell.identifier, for: indexPath) as! WeatherIconTableViewCell
-            cell.configureCell(list[indexPath.row].0)
+            cell.configureCell(data)
             return cell
         case .text:
             let cell = tableView.dequeueReusableCell(withIdentifier: WeatherLabelTableViewCell.identifier, for: indexPath) as! WeatherLabelTableViewCell
-            cell.configureCell(list[indexPath.row].0)
+            cell.configureCell(data)
             return cell
         }
         

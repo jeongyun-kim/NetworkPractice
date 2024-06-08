@@ -163,14 +163,7 @@ class LottoViewController: UIViewController, setup {
         drwNotextField.inputView = pickerView
         drwNotextField.text = list.first // 화면 진입 시, 최신 로또 회차 띄우기
         
-        // 0번째~5번째, 7번째 데이터는 로또 번호
-        // 6번째는 +
-        for i in 0..<lottoNoLabels.count {
-            switch i {
-            case 6: lottoNoLabels[i].configureLottoLabel(BallType.plus)
-            default: lottoNoLabels[i].configureLottoLabel()
-            }
-        }
+        configureLottoLabels()
     }
     
     func network() {
@@ -179,7 +172,9 @@ class LottoViewController: UIViewController, setup {
             case .success(let value):
                 self.configureResult(value)
             case .failure(let error):
-                print(error)
+                if error.isResponseSerializationError {
+                    self.configureEmptyResult()
+                }
             }
         }
     }
@@ -193,8 +188,27 @@ class LottoViewController: UIViewController, setup {
                 lottoNoLabels[i].text = "\(drwtNo)"
             }
         }
-        resultNoLabel.text = "\(data.drwNo)회"
-        drwNoLabel.text = "\(data.drwNoDate) 추첨"
+        resultNoLabel.text = "\(data.resultDesc)"
+        drwNoLabel.text = "\(data.drwNoDesc)"
+        resultLabel.text = "당첨번호 안내"
+    }
+    
+    private func configureEmptyResult() {
+        configureLottoLabels()
+        drwNoLabel.text = ""
+        resultNoLabel.text = ""
+        resultLabel.text = "아직 집계된 결과가 없습니다"
+    }
+    
+    // 0번째~5번째, 7번째 데이터는 로또 번호
+    // 6번째는 +
+    private func configureLottoLabels() {
+        for i in 0..<lottoNoLabels.count {
+            switch i {
+            case 6: lottoNoLabels[i].configureLottoLabel(BallType.plus)
+            default: lottoNoLabels[i].configureLottoLabel()
+            }
+        }
     }
     
     // 각 로또 번호에 맞춰서 색깔 다르게
@@ -205,7 +219,7 @@ class LottoViewController: UIViewController, setup {
         case 21...30: return .systemRed
         case 31...40: return .lightGray
         case 41...45: return .systemGreen
-        default: return .systemGreen
+        default: return .systemGray
         }
     }
     
