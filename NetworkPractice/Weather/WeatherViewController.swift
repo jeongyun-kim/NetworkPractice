@@ -133,7 +133,9 @@ class WeatherViewController: UIViewController, setup {
             if CLLocationManager.locationServicesEnabled() {
                 self.checkCurrentLocationAuthorization()
             } else {
-                self.showSettingAlert()
+                DispatchQueue.main.async { // alert는 global로 그려주려고하면 main에서 처리하라는 에러가 뜸..!
+                    self.showSettingAlert()
+                }
             }
         }
     }
@@ -174,6 +176,8 @@ class WeatherViewController: UIViewController, setup {
             switch response.result {
             case .success(let value):
                 self.list.removeAll()
+                
+                self.dateLabel.text = WeatherUrl.nowDateAndTime
     
                 self.list.append(WeatherAndTemperature(data: value.weather.first!.desc))
                 self.list.append(WeatherAndTemperature(data: value.main.descCelsiusTemp))
@@ -220,7 +224,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
         guard let location = locations.last?.coordinate else { return }
         fetchAddress(x: location.longitude, y: location.latitude)
         fetchWeather(x: location.longitude, y: location.latitude)
-        locationManager.stopUpdatingLocation()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
