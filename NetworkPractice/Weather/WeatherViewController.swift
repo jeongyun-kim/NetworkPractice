@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
 import SnapKit
 
 class WeatherViewController: UIViewController, setup {
@@ -16,6 +17,8 @@ class WeatherViewController: UIViewController, setup {
             tableView.reloadData()
         }
     }
+    
+    lazy var locationManager = CLLocationManager()
     
     let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -39,7 +42,7 @@ class WeatherViewController: UIViewController, setup {
         return imageView
     }()
     
-    let cityLabel: UILabel = {
+    let addressLabel: UILabel = {
         let label = UILabel()
         label.configureFont("서울", size: 18)
         return label
@@ -73,7 +76,8 @@ class WeatherViewController: UIViewController, setup {
         setupConstraints()
         setupTableView()
         addTargets()
-        network()
+ 
+        locationManager.delegate = self
     }
     
     func setupHierarchy() {
@@ -81,7 +85,7 @@ class WeatherViewController: UIViewController, setup {
         view.addSubview(dateLabel)
         view.addSubview(locationImageView)
         view.addSubview(stackView)
-        [locationImageView, cityLabel, shareBtn, refreshBtn].forEach {
+        [locationImageView, addressLabel, shareBtn, refreshBtn].forEach {
             stackView.addArrangedSubview($0)
         }
         view.addSubview(tableView)
@@ -123,12 +127,54 @@ class WeatherViewController: UIViewController, setup {
         tableView.register(WeatherLabelTableViewCell.self, forCellReuseIdentifier: WeatherLabelTableViewCell.identifier)
         tableView.register(WeatherIconTableViewCell.self, forCellReuseIdentifier: WeatherIconTableViewCell.identifier)
     }
-
-    func network() {
-        AF.request(WeatherUrl.weatherUrl).responseDecodable(of: WeatherContainer.self) { response in
+    
+    func checkDeviceLocationAuthorization() {
+        DispatchQueue.global().async { // global은 다른 스레드로 분산처리할 때 사용 / main은 UI 처리 담당
+            if CLLocationManager.locationServicesEnabled() {
+                self.checkCurrentLocationAuthorization()
+            } else {
+                self.showSettingAlert()
+            }
+        }
+    }
+    
+    private func showSettingAlert() {
+        let alert = UIAlertController(title: "위치 권한 설정", message: "위치 권한이 설정되어 있지않아요\n설정에서 위치 권한을 켜주세요!", preferredStyle: .alert)
+        let goSettingAction = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(goSettingAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    private func fetchAddress(x: Double, y: Double) {
+        let params: Parameters = ["x": x, "y": y]
+        
+        AF.request(KakaoUrl.kakaoUrl, parameters: params, headers: KakaoUrl.kakaoHeaders).responseDecodable(of: AddressContainer.self) { response in
             switch response.result {
-                
             case .success(let value):
+                if let address = value.documents.first?.address {
+                    self.addressLabel.text = address.customAddress
+                } else {
+                    self.addressLabel.text = "현재 위치의 주소를 불러오는데 실패했습니다🥲"
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchWeather(x: Double, y: Double) {
+        let params: Parameters = ["lon": x, "lat": y, "appid": APIKeys.weatherKey, "lang": "kr"]
+        AF.request(WeatherUrl.currentWeatherUrl, parameters: params).responseDecodable(of: WeatherContainer.self) { response in
+            switch response.result {
+            case .success(let value):
+                self.list.removeAll()
+    
                 self.list.append(WeatherAndTemperature(data: value.weather.first!.desc))
                 self.list.append(WeatherAndTemperature(data: value.main.descCelsiusTemp))
                 self.list.append(WeatherAndTemperature(data: value.main.descHumidity))
@@ -147,9 +193,38 @@ class WeatherViewController: UIViewController, setup {
         refreshBtn.addTarget(self, action: #selector(refreshBtnTapped), for: .touchUpInside)
     }
     
+    // 새로고침하면 위치 정보 -> 날씨 정보 다시 받아오기
     @objc func refreshBtnTapped(_ sender: UIButton) {
-        list.removeAll()
-        network()
+        checkDeviceLocationAuthorization()
+    }
+    
+    private func checkCurrentLocationAuthorization() {
+        let status = locationManager.authorizationStatus
+        
+        switch status {
+        case .notDetermined: // 권한 창 띄우기
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+        case .denied: // 설정으로 보내기
+            showSettingAlert()
+        case .authorizedWhenInUse: // 위치 정보 받아오는 로직
+            locationManager.startUpdatingLocation()
+        default:
+            break
+        }
+    }
+}
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last?.coordinate else { return }
+        fetchAddress(x: location.longitude, y: location.latitude)
+        fetchWeather(x: location.longitude, y: location.latitude)
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkDeviceLocationAuthorization()
     }
 }
 
@@ -160,6 +235,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = list[indexPath.row]
+
         switch data.type {
         case .icon:
             let cell = tableView.dequeueReusableCell(withIdentifier: WeatherIconTableViewCell.identifier, for: indexPath) as! WeatherIconTableViewCell

@@ -33,7 +33,7 @@
 		E0387ED02C1204510093C185 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E0387ECF2C1204510093C185 /* Kingfisher */; };
 		E0387ED22C1208930093C185 /* WeatherDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0387ED12C1208930093C185 /* WeatherDataType.swift */; };
 		E0387ED42C120A460093C185 /* WeatherIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */; };
-		E0A881802C16CA9600538021 /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A8817F2C16CA9600538021 /* TrendViewController.swift */; };
+		E0BAE99D2C22F1E1008F795F /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE99C2C22F1E1008F795F /* Address.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +61,7 @@
 		E0387ECC2C11AF5E0093C185 /* WeatherLabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabelTableViewCell.swift; sourceTree = "<group>"; };
 		E0387ED12C1208930093C185 /* WeatherDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataType.swift; sourceTree = "<group>"; };
 		E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconTableViewCell.swift; sourceTree = "<group>"; };
-		E0A8817F2C16CA9600538021 /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
+		E0BAE99C2C22F1E1008F795F /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,6 @@
 		E0387E892C10B0930093C185 /* NetworkPractice */ = {
 			isa = PBXGroup;
 			children = (
-				E0A8817E2C16C61B00538021 /* Trend */,
 				E0387EC32C117F290093C185 /* Protocol */,
 				E0387EB82C10BD4F0093C185 /* Extension */,
 				E0387EB22C10B3810093C185 /* Model */,
@@ -141,6 +140,7 @@
 				E0387EB32C10B3880093C185 /* Movie.swift */,
 				E0387EBD2C10CCE80093C185 /* Lotto.swift */,
 				E0387EC92C118B500093C185 /* Weather.swift */,
+				E0BAE99C2C22F1E1008F795F /* Address.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,14 +180,6 @@
 				E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		E0A8817E2C16C61B00538021 /* Trend */ = {
-			isa = PBXGroup;
-			children = (
-				E0A8817F2C16CA9600538021 /* TrendViewController.swift */,
-			);
-			path = Trend;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,9 +277,9 @@
 				E0387ECA2C118B500093C185 /* Weather.swift in Sources */,
 				E0387EC02C10D1150093C185 /* UILabel + Extension.swift in Sources */,
 				E0387EBA2C10BD5F0093C185 /* UIViewController + Extension.swift in Sources */,
-				E0A881802C16CA9600538021 /* TrendViewController.swift in Sources */,
 				E0387EBE2C10CCE80093C185 /* Lotto.swift in Sources */,
 				E0387ECD2C11AF5E0093C185 /* WeatherLabelTableViewCell.swift in Sources */,
+				E0BAE99D2C22F1E1008F795F /* Address.swift in Sources */,
 				E0387EC22C117BAF0093C185 /* BallType.swift in Sources */,
 				E0387EA72C10B1E30093C185 /* APIKey.swift in Sources */,
 				E0387EAB2C10B2A80093C185 /* MovieTableViewCell.swift in Sources */,

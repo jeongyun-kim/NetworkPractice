@@ -19,11 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let lottoView = LottoViewController()
         let movieView = MovieViewController()
         let weatherView = WeatherViewController()
-        let trendView = TrendViewController()
         
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .systemBackground
-        tabBarController.setViewControllers([lottoView, movieView, weatherView, trendView], animated: true)
+        tabBarController.setViewControllers([lottoView, movieView, weatherView], animated: true)
         if let items = tabBarController.tabBar.items {
             items[0].selectedImage = UIImage(systemName: "number.circle.fill")
             items[0].image = UIImage(systemName: "number.circle")
@@ -33,9 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             items[2].selectedImage = UIImage(systemName: "cloud.rainbow.half.fill")
             items[2].image = UIImage(systemName: "cloud.rainbow.half")
-            
-            items[3].selectedImage = UIImage(systemName: "star.fill")
-            items[3].image = UIImage(systemName: "star")
         }
         
         // 처음 보여질 화면(=탭바)을 root로 설정하고 보여주기

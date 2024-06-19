@@ -24,14 +24,20 @@ struct Weather: Decodable {
 
 struct Temperature: Decodable {
     let temp: Double
-    let feels_like: Double
-    let temp_min: Double
-    let temp_max: Double
+    let tempMin: Double
+    let tempMax: Double
     let humidity: Int
  
+    enum CodingKeys: String, CodingKey {
+        case temp
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case humidity
+    }
+    
     var descCelsiusTemp: String {
-        let tempMin = Int(round(temp_min - 273.15))
-        let tempMax = Int(round(temp_max - 273.15))
+        let tempMin = Int(round(tempMin - 273.15))
+        let tempMax = Int(round(tempMax - 273.15))
         return "오늘의 최저 기온은 \(tempMin)℃, \n최고 기온은 \(tempMax)℃에요"
     }
     
@@ -44,5 +50,3 @@ struct WeatherAndTemperature {
     let data: String
     var type: WeatherDataType = .text
 }
-
-//WeatherContainer(weather: [NetworkPractice.Weather(main: "Clouds", icon: "02d", description: "약간의 구름이 낀 하늘")], main: NetworkPractice.Temperature(temp: 300.79, feels_like: 301.54, temp_min: 294.84, temp_max: 303.81))
