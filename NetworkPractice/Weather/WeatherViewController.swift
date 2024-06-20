@@ -155,41 +155,29 @@ class WeatherViewController: UIViewController, setup {
     
     private func fetchAddress(x: Double, y: Double) {
         let params: Parameters = ["x": x, "y": y]
-        
-        AF.request(KakaoUrl.kakaoUrl, parameters: params, headers: KakaoUrl.kakaoHeaders).responseDecodable(of: AddressContainer.self) { response in
-            switch response.result {
-            case .success(let value):
-                if let address = value.documents.first?.address {
-                    self.addressLabel.text = address.customAddress
-                } else {
-                    self.addressLabel.text = "현재 위치의 주소를 불러오는데 실패했습니다🥲"
-                }
-            case .failure(let error):
-                print(error)
+        NetworkService.shared.fetch(NetworkCase: .kakaoAddress, params: params, headers: KakaoUrl.kakaoHeaders) { (result: AddressContainer) in
+            if let address = result.documents.first?.address {
+                self.addressLabel.text = address.customAddress
+            } else {
+                self.addressLabel.text = "현재 위치의 주소를 불러오는데 실패했습니다🥲"
             }
         }
     }
     
     func fetchWeather(x: Double, y: Double) {
         let params: Parameters = ["lon": x, "lat": y, "appid": APIKeys.weatherKey, "lang": "kr"]
-        AF.request(WeatherUrl.currentWeatherUrl, parameters: params).responseDecodable(of: WeatherContainer.self) { response in
-            switch response.result {
-            case .success(let value):
-                self.list.removeAll()
-                
-                self.dateLabel.text = WeatherUrl.nowDateAndTime
-    
-                self.list.append(WeatherAndTemperature(data: value.weather.first!.desc))
-                self.list.append(WeatherAndTemperature(data: value.main.descCelsiusTemp))
-                self.list.append(WeatherAndTemperature(data: value.main.descHumidity))
-                self.list.append(WeatherAndTemperature(data: "오늘도 좋은 하루되세요✨"))
-                
-                WeatherUrl.weatherIconName = value.weather.first!.icon
-                self.list.append(WeatherAndTemperature(data: WeatherUrl.weatherIconUrl, type: .icon))
-                
-            case .failure(let error):
-                print(error)
-            }
+        NetworkService.shared.fetch(NetworkCase: .openWeather, params: params, headers: nil) { (result: WeatherContainer) in
+            self.list.removeAll()
+            
+            self.dateLabel.text = WeatherUrl.nowDateAndTime
+
+            self.list.append(WeatherAndTemperature(data: result.weather.first!.desc))
+            self.list.append(WeatherAndTemperature(data: result.main.descCelsiusTemp))
+            self.list.append(WeatherAndTemperature(data: result.main.descHumidity))
+            self.list.append(WeatherAndTemperature(data: "오늘도 좋은 하루되세요✨"))
+            
+            WeatherUrl.weatherIconName = result.weather.first!.icon
+            self.list.append(WeatherAndTemperature(data: WeatherUrl.weatherIconUrl, type: .icon))
         }
     }
     
@@ -199,6 +187,7 @@ class WeatherViewController: UIViewController, setup {
     
     // 새로고침하면 위치 정보 -> 날씨 정보 다시 받아오기
     @objc func refreshBtnTapped(_ sender: UIButton) {
+        print("A")
         checkDeviceLocationAuthorization()
     }
     

@@ -34,6 +34,7 @@
 		E0387ED22C1208930093C185 /* WeatherDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0387ED12C1208930093C185 /* WeatherDataType.swift */; };
 		E0387ED42C120A460093C185 /* WeatherIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */; };
 		E0BAE99D2C22F1E1008F795F /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE99C2C22F1E1008F795F /* Address.swift */; };
+		E0BAE9A82C243A15008F795F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE9A72C243A15008F795F /* NetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		E0387ED12C1208930093C185 /* WeatherDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataType.swift; sourceTree = "<group>"; };
 		E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconTableViewCell.swift; sourceTree = "<group>"; };
 		E0BAE99C2C22F1E1008F795F /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		E0BAE9A72C243A15008F795F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				E0387E982C10B0940093C185 /* Info.plist */,
 				E0387EA62C10B1E30093C185 /* APIKey.swift */,
 				E0387EC42C1180040093C185 /* UIStruct.swift */,
+				E0BAE9A72C243A15008F795F /* NetworkService.swift */,
 			);
 			path = NetworkPractice;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				E0387EC02C10D1150093C185 /* UILabel + Extension.swift in Sources */,
 				E0387EBA2C10BD5F0093C185 /* UIViewController + Extension.swift in Sources */,
 				E0387EBE2C10CCE80093C185 /* Lotto.swift in Sources */,
+				E0BAE9A82C243A15008F795F /* NetworkService.swift in Sources */,
 				E0387ECD2C11AF5E0093C185 /* WeatherLabelTableViewCell.swift in Sources */,
 				E0BAE99D2C22F1E1008F795F /* Address.swift in Sources */,
 				E0387EC22C117BAF0093C185 /* BallType.swift in Sources */,

@@ -167,15 +167,8 @@ class LottoViewController: UIViewController, setup {
     }
     
     func network() {
-        AF.request(LottoUrl.lottoUrl).responseDecodable(of: Lotto.self) { response in
-            switch response.result {
-            case .success(let value):
-                self.configureResult(value)
-            case .failure(let error):
-                if error.isResponseSerializationError {
-                    self.configureEmptyResult()
-                }
-            }
+        NetworkService.shared.fetch(NetworkCase: .lotto, params: nil, headers: nil) { (result: Lotto) in
+            self.configureResult(result)
         }
     }
     
