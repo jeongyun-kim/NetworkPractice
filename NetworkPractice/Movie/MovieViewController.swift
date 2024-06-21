@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import Alamofire
 import SnapKit
-import Toast
 
 class MovieViewController: UIViewController, setup {
     let tableView: UITableView = {
@@ -59,7 +57,7 @@ class MovieViewController: UIViewController, setup {
         setupHierarchy()
         setupConstraints()
         addTargets()
-        network()
+        fetchMovieData()
     }
     
     func setupHierarchy() {
@@ -137,7 +135,7 @@ class MovieViewController: UIViewController, setup {
             let cntLengthCheck = keyword.components(separatedBy: " ").joined().count == 8 ? true : false
             if cntLengthCheck && checkDate(keyword){
                 MovieUrl.movieUrl = keyword
-                network()
+                fetchMovieData()
             } else { // 입력값이 유효하지 않음
                 self.showToast("입력값을 확인해주세요!")
             }
@@ -158,20 +156,13 @@ class MovieViewController: UIViewController, setup {
         return result.rawValue == -1 ? true : false
     }
     
-    private func network() {
-        AF.request(MovieUrl.movieUrl).responseDecodable(of: BoxOffice.self) { response in
-            switch response.result {
-            case .success(let value):
-                print("success")
-                let data = value.boxOfficeResult.dailyBoxOfficeList
-                if data.isEmpty {
-                    self.showToast("검색결과가 없어요!")
-                } else {
-                    self.list = data
-                }
-            case .failure(let error):
-                print(error)
-                
+    private func fetchMovieData() {
+        NetworkService.shared.fetchMovieData { result in
+            let data = result.boxOfficeResult.dailyBoxOfficeList
+            if data.isEmpty {
+                self.showToast("검색결과가 없어요!")
+            } else {
+                self.list = data
             }
         }
     }

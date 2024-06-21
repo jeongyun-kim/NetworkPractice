@@ -12,6 +12,7 @@ enum NetworkCase {
     case kakaoAddress
     case openWeather
     case lotto
+    case movie
     
     var url: String {
         switch self {
@@ -21,6 +22,8 @@ enum NetworkCase {
             return WeatherUrl.currentWeatherUrl
         case .lotto:
             return LottoUrl.lottoUrl
+        case .movie:
+            return MovieUrl.movieUrl
         }
     }
 }
@@ -57,6 +60,12 @@ extension NetworkService {
     func fetchAddressData(x: Double, y: Double, handler: @escaping (AddressContainer) -> Void) {
         let params: Parameters = ["x": x, "y": y]
         fetch(NetworkCase: .kakaoAddress, params: params, headers: KakaoUrl.kakaoHeaders) { result in
+            handler(result)
+        }
+    }
+    
+    func fetchMovieData(handler: @escaping (BoxOffice) -> Void) {
+        fetch(NetworkCase: .movie, params: nil, headers: nil) { result in
             handler(result)
         }
     }
