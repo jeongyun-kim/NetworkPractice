@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 import SnapKit
 
 class LottoViewController: UIViewController, setup {
@@ -88,7 +87,7 @@ class LottoViewController: UIViewController, setup {
         setupConstraints()
         setupPickerView()
         setupUI()
-        network()
+        fetchLotto()
     }
     
     func setupHierarchy() {
@@ -166,9 +165,9 @@ class LottoViewController: UIViewController, setup {
         configureLottoLabels()
     }
     
-    func network() {
-        NetworkService.shared.fetch(NetworkCase: .lotto, params: nil, headers: nil) { (result: Lotto) in
-            self.configureResult(result)
+    func fetchLotto() {
+        NetworkService.shared.fetchLottoData { lotto in
+            self.configureResult(lotto)
         }
     }
     
@@ -244,6 +243,6 @@ extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         drwNotextField.text = list[row]
         LottoUrl.drwNo = list[row]
-        network()
+        fetchLotto()
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 import CoreLocation
 import SnapKit
 
@@ -44,7 +43,7 @@ class WeatherViewController: UIViewController, setup {
     
     let addressLabel: UILabel = {
         let label = UILabel()
-        label.configureFont("서울", size: 18)
+        label.configureFont("서울", size: 15)
         return label
     }()
     
@@ -107,7 +106,7 @@ class WeatherViewController: UIViewController, setup {
         
         [locationImageView, shareBtn, refreshBtn].forEach {
             $0.snp.makeConstraints {
-                $0.size.equalTo(35)
+                $0.size.equalTo(25)
             }
         }
         
@@ -154,19 +153,17 @@ class WeatherViewController: UIViewController, setup {
     }
     
     private func fetchAddress(x: Double, y: Double) {
-        let params: Parameters = ["x": x, "y": y]
-        NetworkService.shared.fetch(NetworkCase: .kakaoAddress, params: params, headers: KakaoUrl.kakaoHeaders) { (result: AddressContainer) in
+        NetworkService.shared.fetchAddressData(x: x, y: y) { result in
             if let address = result.documents.first?.address {
                 self.addressLabel.text = address.customAddress
             } else {
-                self.addressLabel.text = "현재 위치의 주소를 불러오는데 실패했습니다🥲"
+                self.addressLabel.text = "주소를 불러오는데 실패했습니다🥲"
             }
         }
     }
     
     func fetchWeather(x: Double, y: Double) {
-        let params: Parameters = ["lon": x, "lat": y, "appid": APIKeys.weatherKey, "lang": "kr"]
-        NetworkService.shared.fetch(NetworkCase: .openWeather, params: params, headers: nil) { (result: WeatherContainer) in
+        NetworkService.shared.fetchWeatherData(x: x, y: y) { result in
             self.list.removeAll()
             
             self.dateLabel.text = WeatherUrl.nowDateAndTime
