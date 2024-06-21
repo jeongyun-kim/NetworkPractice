@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 extension UIViewController {
     func showToast(_ message: String) {

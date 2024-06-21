@@ -35,6 +35,8 @@
 		E0387ED42C120A460093C185 /* WeatherIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */; };
 		E0BAE99D2C22F1E1008F795F /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE99C2C22F1E1008F795F /* Address.swift */; };
 		E0BAE9A82C243A15008F795F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE9A72C243A15008F795F /* NetworkService.swift */; };
+		E0BAE9AE2C25D7A4008F795F /* ValidateDateErrorCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE9AD2C25D7A4008F795F /* ValidateDateErrorCase.swift */; };
+		E0BAE9B22C25D7EE008F795F /* NetworkCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BAE9B12C25D7EE008F795F /* NetworkCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconTableViewCell.swift; sourceTree = "<group>"; };
 		E0BAE99C2C22F1E1008F795F /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		E0BAE9A72C243A15008F795F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		E0BAE9AD2C25D7A4008F795F /* ValidateDateErrorCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateDateErrorCase.swift; sourceTree = "<group>"; };
+		E0BAE9B12C25D7EE008F795F /* NetworkCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,7 @@
 		E0387E892C10B0930093C185 /* NetworkPractice */ = {
 			isa = PBXGroup;
 			children = (
+				E0BAE9AF2C25D7B9008F795F /* Resources */,
 				E0387EC32C117F290093C185 /* Protocol */,
 				E0387EB82C10BD4F0093C185 /* Extension */,
 				E0387EB22C10B3810093C185 /* Model */,
@@ -113,8 +118,6 @@
 				E0387E952C10B0940093C185 /* LaunchScreen.storyboard */,
 				E0387E982C10B0940093C185 /* Info.plist */,
 				E0387EA62C10B1E30093C185 /* APIKey.swift */,
-				E0387EC42C1180040093C185 /* UIStruct.swift */,
-				E0BAE9A72C243A15008F795F /* NetworkService.swift */,
 			);
 			path = NetworkPractice;
 			sourceTree = "<group>";
@@ -183,6 +186,25 @@
 				E0387ED32C120A460093C185 /* WeatherIconTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		E0BAE9AF2C25D7B9008F795F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E0BAE9B02C25D7D3008F795F /* Enums */,
+				E0BAE9A72C243A15008F795F /* NetworkService.swift */,
+				E0387EC42C1180040093C185 /* UIStruct.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E0BAE9B02C25D7D3008F795F /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				E0BAE9AD2C25D7A4008F795F /* ValidateDateErrorCase.swift */,
+				E0BAE9B12C25D7EE008F795F /* NetworkCase.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,6 +292,7 @@
 			files = (
 				E0387EBC2C10C24C0093C185 /* Setup.swift in Sources */,
 				E0387EC82C118AEB0093C185 /* WeatherViewController.swift in Sources */,
+				E0BAE9AE2C25D7A4008F795F /* ValidateDateErrorCase.swift in Sources */,
 				E0387EA92C10B21E0093C185 /* ReusableIdentifier.swift in Sources */,
 				E0387EC52C1180040093C185 /* UIStruct.swift in Sources */,
 				E0387EA42C10B1BA0093C185 /* LottoViewController.swift in Sources */,
@@ -282,6 +305,7 @@
 				E0387EBA2C10BD5F0093C185 /* UIViewController + Extension.swift in Sources */,
 				E0387EBE2C10CCE80093C185 /* Lotto.swift in Sources */,
 				E0BAE9A82C243A15008F795F /* NetworkService.swift in Sources */,
+				E0BAE9B22C25D7EE008F795F /* NetworkCase.swift in Sources */,
 				E0387ECD2C11AF5E0093C185 /* WeatherLabelTableViewCell.swift in Sources */,
 				E0BAE99D2C22F1E1008F795F /* Address.swift in Sources */,
 				E0387EC22C117BAF0093C185 /* BallType.swift in Sources */,

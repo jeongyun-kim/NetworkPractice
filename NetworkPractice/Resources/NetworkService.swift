@@ -8,26 +8,6 @@
 import Foundation
 import Alamofire
 
-enum NetworkCase {
-    case kakaoAddress
-    case openWeather
-    case lotto
-    case movie
-    
-    var url: String {
-        switch self {
-        case .kakaoAddress:
-            return KakaoUrl.kakaoUrl
-        case .openWeather:
-            return WeatherUrl.currentWeatherUrl
-        case .lotto:
-            return LottoUrl.lottoUrl
-        case .movie:
-            return MovieUrl.movieUrl
-        }
-    }
-}
-
 class NetworkService {
     private init() {}
     static let shared = NetworkService()
